@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEGA LUCK</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#12002b,#3b0066);
+  color:white;
+  text-align:center;
+}
+.container{
+  max-width:450px;
+  margin:auto;
+  padding:30px 20px;
+}
+h1{
+  color:#ffd700;
+  font-size:42px;
+  text-shadow:0 0 15px #ff9800;
+}
+.card{
+  background:#ffffff15;
+  padding:25px;
+  border-radius:20px;
+  margin-top:20px;
+}
+input{
+  width:90%;
+  padding:14px;
+  margin:8px;
+  border-radius:10px;
+  border:0;
+  font-size:16px;
+}
+button{
+  padding:15px 30px;
+  border:0;
+  border-radius:12px;
+  font-size:18px;
+  font-weight:bold;
+  background:#ffd700;
+  color:#222;
+  margin-top:10px;
+}
+.hidden{display:none}
+
+.wheel{
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  margin:25px auto;
+  border:8px solid #ffd700;
+  background:conic-gradient(
+    #ff3333 0deg 60deg,
+    #222 60deg 120deg,
+    #2196f3 120deg 180deg,
+    #222 180deg 240deg,
+    #20c878 240deg 300deg,
+    #222 300deg 360deg
+  );
+  transition:transform 4s ease-out;
+}
+
+.result{
+  font-size:25px;
+  font-weight:bold;
+  margin:20px;
+}
+
+.call{
+  display:inline-block;
+  background:#20d878;
+  color:#002b16;
+  padding:14px 25px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>MEGA LUCK</h1>
+
+<div id="login" class="card">
+<h2>Enter Demo</h2>
+
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="enterGame()">ENTER</button>
+</div>
+
+<div id="game" class="card hidden">
+
+<h2>LUCKY WHEEL</h2>
+
+<div id="wheel" class="wheel"></div>
+
+<button id="spinButton" onclick="spin()">SPIN</button>
+
+<div id="result" class="result"></div>
+
+<div id="call"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let spinCount = 0;
+let winningSpin = Math.floor(Math.random()*100)+1;
+let rotation = 0;
+
+function enterGame(){
+
+let email=document.getElementById("email").value;
+
+if(!email.includes("@")){
+alert("Please enter a valid email");
+return;
+}
+
+document.getElementById("login").classList.add("hidden");
+document.getElementById("game").classList.remove("hidden");
+
+}
+
+function spin(){
+
+let button=document.getElementById("spinButton");
+let wheel=document.getElementById("wheel");
+
+button.disabled=true;
+
+spinCount++;
+
+let win = spinCount === winningSpin;
+
+rotation += 1440 + Math.floor(Math.random()*360);
+
+wheel.style.transform="rotate("+rotation+"deg)";
+
+setTimeout(function(){
+
+if(win){
+
+document.getElementById("result").innerHTML="🎉 1000 — WINNER!";
+
+document.getElementById("call").innerHTML=
+'<a class="call" href="tel:+94112345678">CALL NOW</a>';
+
+}else{
+
+document.getElementById("result").innerHTML="NO LUCK";
+
+}
+
+button.disabled=false;
+
+if(spinCount>=100){
+
+spinCount=0;
+winningSpin=Math.floor(Math.random()*100)+1;
+
+}
+
+},4100);
+
+}
+
+</script>
+
+</body>
+</html>
